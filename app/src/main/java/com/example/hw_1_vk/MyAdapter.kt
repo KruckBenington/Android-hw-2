@@ -9,12 +9,13 @@ import java.util.ArrayList
 class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
 
 
-    private val items: ArrayList<NumberData> = ArrayList<NumberData>()
+    private var items: List<NumberData> = emptyList()
 
-    fun addItem() {
-        val number = items.count() + 1
-        items.add(NumberData(number = number))
-        notifyDataSetChanged()
+    fun addItem(newItems: List<NumberData>) {
+        val differ = MyDifferCallback(this.items, newItems = newItems)
+        val result = DiffUtil.calculateDiff(differ)
+        items = newItems
+        result.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(
@@ -33,6 +34,7 @@ class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
         holder.setColor(colorToSet)
 
         holder.bind(items[position])
+
     }
 
     override fun getItemCount(): Int {
@@ -41,3 +43,22 @@ class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
 
 }
 
+class MyDifferCallback(val oldItems: List<NumberData>, val newItems: List<NumberData>) : DiffUtil.Callback() {
+
+    override fun getOldListSize(): Int {
+        return oldItems.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newItems.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldItems[oldItemPosition] == newItems[newItemPosition]
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldItems[oldItemPosition] == newItems[newItemPosition]
+    }
+
+}
