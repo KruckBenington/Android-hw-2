@@ -1,5 +1,7 @@
 package com.example.hw_2_vk.images
 
+import com.google.gson.annotations.SerializedName
+
 data class GiphyResponse(
     val data: List<GifData>
 )
@@ -10,6 +12,7 @@ data class GifData(
 )
 
 data class GifImagesData(
+    @SerializedName("downsized")
     val downsized: GifImageData
 )
 

@@ -16,34 +16,36 @@ data class MediaItem(
 )
 
 fun ImageData.toMediaItem(): MediaItem {
-
     val targetWidth = 600
-    val aspect = height.toFloat() / width.toFloat()
+
+
+    val realAspect = height.toFloat() / width.toFloat()
+
+
+    val aspect = realAspect.coerceIn(0.7f, 1.8f)
+
     val targetHeight = (targetWidth * aspect).toInt()
 
-
     val displayUrl = "https://picsum.photos/id/$id/$targetWidth/$targetHeight"
+
     return MediaItem(
         id = id,
         url = displayUrl,
-        width = width,
-        height = height,
+        width = targetWidth,
+        height = targetHeight,
         type = MediaType.IMAGE
     )
 }
 
 
 fun GifData.toMediaItem(): MediaItem {
-    val downsized = images.downsized
-
-    val w = downsized.width.toIntOrNull() ?: 1
-    val h = downsized.height.toIntOrNull() ?: 1
+    val img = images.downsized
 
     return MediaItem(
         id = id,
-        url = downsized.url,
-        width = w,
-        height = h,
+        url = img.url,
+        width = img.width.toInt(),
+        height = img.height.toInt(),
         type = MediaType.GIF
     )
 }

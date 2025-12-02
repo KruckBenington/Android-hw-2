@@ -5,18 +5,26 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.hw_2_vk.items.MediaItem
+import com.example.hw_2_vk.items.MediaType
 
 class MediaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private val imageView = view.findViewById<ImageView>(R.id.mediaView)
 
     fun bind(item: MediaItem) {
-        // Пока только картинки (IMAGE); GIF добавлю позже
-        Glide.with(imageView.context)
-            .load(item.url)
-            .error(R.drawable.ic_launcher_background)
-            .placeholder(R.drawable.ic_launcher_foreground)
-            .into(imageView)
+        if (item.type == MediaType.GIF) {
+            Glide.with(imageView.context)
+                .asGif()
+                .fitCenter()
+                .load(item.url)
+                .into(imageView)
+
+        } else {
+            Glide.with(imageView.context)
+                .load(item.url)
+                .fitCenter()
+                .into(imageView)
+        }
     }
 
 }

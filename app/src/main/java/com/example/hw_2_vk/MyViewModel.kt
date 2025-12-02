@@ -43,12 +43,20 @@ class MyViewModel : ViewModel() {
                     isPagingLoading.value = true
                 }
 
-                val dtos = NetworkModule.picsumApi.getImages(
+                val picsumApiData = NetworkModule.picsumApi.getImages(
                     page = page,
-                    limit = pageSize
-                )
+                    limit = pageSize / 2
+                ).map { it.toMediaItem() }
 
-                val newItems = dtos.map { it.toMediaItem() }
+                val gifs = NetworkModule.giphyApi.searchGifs(
+                    limit = pageSize / 2,
+                    offset = (page - 1) * 10,
+                    query = "cats"
+                ).data.map { it.toMediaItem() }
+
+
+
+                val newItems = gifs + picsumApiData
 
                 if (isFirstPage) {
                     mediaItems.value = newItems
@@ -65,7 +73,7 @@ class MyViewModel : ViewModel() {
                     isLastPage = true
                 }
 
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 if (isFirstPage) {
                     errorMessage.value = "Ошибка загрузки"
                 }

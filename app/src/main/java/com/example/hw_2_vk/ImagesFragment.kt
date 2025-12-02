@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlin.getValue
@@ -57,7 +56,9 @@ class ImagesFragment : Fragment() {
         val layoutManager = StaggeredGridLayoutManager(
             columns,
             StaggeredGridLayoutManager.VERTICAL
-        )
+        ).apply {
+            gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+        }
         recyclerView.layoutManager = layoutManager
 
 
@@ -89,7 +90,7 @@ class ImagesFragment : Fragment() {
         }
 
 
-        retryButton.setOnClickListener { it: View? ->
+        retryButton.setOnClickListener { _: View? ->
             viewModel.loadFirstPage()
         }
 

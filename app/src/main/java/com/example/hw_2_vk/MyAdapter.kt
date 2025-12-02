@@ -38,7 +38,6 @@ class MyAdapter() : RecyclerView.Adapter<MediaViewHolder>() {
     }
 
 
-
     override fun getItemCount(): Int {
         return items.count()
     }

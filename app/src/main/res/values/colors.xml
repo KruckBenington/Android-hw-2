@@ -10,4 +10,6 @@
 
     <color name="square_even">#FF0000</color>
     <color name="square_odd">#0000FF</color>
+    <color name="errorViewColor">#33FF0000</color>
+
 </resources>
