@@ -1,38 +1,43 @@
-package com.example.hw_1_vk
+package com.example.hw_2_vk
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import java.util.ArrayList
+import com.example.hw_2_vk.items.MediaItem
 
-class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter() : RecyclerView.Adapter<MediaViewHolder>() {
 
-    private var items: List<NumberData> = emptyList()
+    private var items: List<MediaItem> = emptyList()
 
-    fun addItem(newItems: List<NumberData>) {
-        val differ = MyDifferCallback(this.items, newItems = newItems)
-        val result = DiffUtil.calculateDiff(differ)
+    fun submitItems(newItems: List<MediaItem>) {
+        val diff = MyDifferCallback(this.items, newItems)
+        val result = DiffUtil.calculateDiff(diff)
         items = newItems
         result.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
-    ): MyViewHolder {
-        return MyViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.square, parent, false)
+    ): MediaViewHolder {
+        return MediaViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.media, parent, false)
         )
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-        val colorToSet = if (position % 2 == 1) ButtonColor.Blue else ButtonColor.Red
-        holder.setColor(colorToSet)
-
+    override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
         holder.bind(items[position])
-
+        holder.itemView.setOnClickListener {
+            Toast.makeText(
+                holder.itemView.context,
+                "${holder.bindingAdapterPosition + 1}",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
+
+
 
     override fun getItemCount(): Int {
         return items.count()
@@ -40,7 +45,7 @@ class MyAdapter() : RecyclerView.Adapter<MyViewHolder>() {
 
 }
 
-class MyDifferCallback(val oldItems: List<NumberData>, val newItems: List<NumberData>) :
+class MyDifferCallback(val oldItems: List<MediaItem>, val newItems: List<MediaItem>) :
     DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

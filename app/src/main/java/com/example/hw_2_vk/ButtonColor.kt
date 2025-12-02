@@ -1,4 +1,4 @@
-package com.example.hw_1_vk
+package com.example.hw_2_vk
 
 enum class ButtonColor {
     Red, Blue

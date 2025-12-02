@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">HW-1-VK</string>'
     <string name="button_text">Add square</string>
+    <string name="error_loading">Не удалось загрузить данные</string>
+    <string name="retry">Повторить</string>
+    <string name="retrybuttontext">Повторить</string>
+    <string name="erorr_textview">Ошибка загрузки</string>
+    <string name="ViewModelErrorLoadMedia">Не удалось загрузить изображения</string>
 </resources>

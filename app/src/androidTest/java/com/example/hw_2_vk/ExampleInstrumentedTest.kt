@@ -1,4 +1,4 @@
-package com.example.hw_1_vk
+package com.example.hw_2_vk
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
